@@ -1,0 +1,14 @@
+/*	index	*/
+body {
+	background-color: skyblue;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: skyblue;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}

@@ -1,0 +1,271 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Century Gothic, sans-serif;
+	background-color: #F7F7F7;
+	height: 150vh;
+}
+
+header {
+	background-color: darkblue;
+	padding: 10px 50px;
+	height: fit-content!important;
+	display: flex;
+	align-items: center;
+}
+
+header nav.navbar {
+	width: 100%;
+	background-color:darkblue;
+	color: white;
+	padding: 10px;
+	height: ;
+}
+
+header nav.navbar,
+header nav.navbar div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+header nav.navbar div a {
+	color: #fff;
+	padding: 5px 10px;
+	margin-right: 10px;
+	text-decoration: none;
+	border: 1px solid #fff;
+	border-radius: 50px;
+
+}
+
+main.hr-center {
+	margin: auto;
+	max-width: 80%;
+	min-height: 91vh;
+	display: flex;
+	align-items: center;
+}
+
+main section.title h1 {
+	font-size: 4rem;
+	color: #0074D9;
+	margin: 50px 0;
+	text-transform: uppercase;
+	border-bottom: 3px solid #0074D9;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	width: fit-content;
+}
+
+main section.content {
+	width: 100%;
+	color: white;
+	padding: 20px;
+	background-color: darkblue;
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.2);
+	border-radius: 5px;
+	height: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+main section.content h1 {
+	font-size: 3.5rem;
+	border-left: 3px solid #fff;
+	border-radius: 5px;
+	padding-left: 5px;
+}
+
+.mt {
+	margin-top: 50px;
+}
+
+
+
+/*	LOGIN	&	SIGNUP */
+
+.bg-white {
+	background-color: #fff!important;
+}
+
+.full-width{
+	width: 100%;
+}
+
+.half-width{
+	width: 50%;
+}
+.mg-auto {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.flx-d-clmn {
+	flex-direction: column;
+}
+
+.lead {
+	color: #000;
+	text-align: center;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #0074D9;
+}
+
+input.form-control {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+button[type="submit"] {
+	background-color: #0074D9;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	margin: 10px 0 25px;
+}
+
+button[type="submit"]:hover {
+	background-color: #0050A0;
+}
+
+.alert {
+	background-color: #f44336;
+	color: white;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+
+/*		ADMIN DASHBOARD			*/
+
+main {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: white;
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.card {
+	width: calc(33.33% - 20px);
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 20px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+	margin-top: 0;
+	font-size: 24px;
+	margin-bottom: 10px;
+	color: #0074D9;
+}
+
+.card p {
+	margin: 0;
+	font-size: 16px;
+	color: #555;
+}
+
+.card a {
+	color: #0074D9;
+	text-decoration: none;
+	font-weight: bold;
+	display: block;
+	margin-top: 10px;
+}
+
+.card a:hover {
+	text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+	.card {
+		width: calc(50% - 20px);
+	}
+}
+
+@media (max-width: 575px) {
+	.card {
+		width: 100%;
+	}
+}
+
+
+
+/*		USER DASHBOARD			*/
+
+.d-flex {
+	display: flex!important;
+}
+
+.space-btw {
+	justify-content: space-between!important;
+}
+
+.space-arnd {
+	justify-content: space-around!important;
+}
+
+.mb-4 {
+	margin-bottom: 50px;
+}
+
+.mx {
+	margin: ;
+}
+
+.err-msg {
+	color: red;
+	padding: 15px 5px;
+	margin: 10px 0;
+}
+
+.suc-msg {
+	color: green;
+	padding: 15px 5px;
+	margin: 10px 0;
+}
+
+.record-list {
+	min-height: 400px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	flex-direction: column;
+/*	justify-content: space-between;*/
+}

@@ -1,18 +1,46 @@
 <?php
+
+session_start();
+
+if( isset($_SESSION['loggedInUserId']) ){
+    header('location: ./user/');exit;
+}
+
+require_once './inc/connection.php';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirm_password"];
-
+    $username = $dbc->real_escape_string( $_POST["username"] );
+    $email = $dbc->real_escape_string( $_POST["email"] );
+    $password = $dbc->real_escape_string( $_POST["password"] );
+    $confirmPassword = $dbc->real_escape_string( $_POST["confirm_password"] );
+    
     // TODO: Add validation and registration logic here
     // For simplicity, validation is not included in this basic example
     // You should perform validation, check for existing users, hash passwords, etc.
+    
+    $errors = [];
+    if ( $password !== $confirmPassword )
+        $errors[] = 'Paswords did not match!';
 
+    if( !$errors) {
+        $register_sql = "INSERT INTO `users`(`username`,`email`,`password`) 
+                        VALUES ('$username','$email','$password')";
+        try {
+            $query = $dbc->query( $register_sql );
+            if( $dbc->affected_rows > 0 ){
+                $_SESSION['registrationMessage'] = "Registration successful! Please Login.";
+                header('location: login.php');exit;
+            }
+        } catch (\Throwable $th) {
+            $_SESSION['registrationMessage'][] = $dbc->error;
+        }
+    }else{
+        $_SESSION['registrationMessage'] = $errors;
+    }
+    
     // Example: Assume registration is successful
-    $registrationMessage = "Registration successful!";
 }
 ?>
 
@@ -74,10 +102,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Register for Car Rental System</h1>
     </header>
 
-    <form action="register_page.php" method="post">
-        <?php if (isset($registrationMessage)) : ?>
-            <p style="color: green;"><?php echo $registrationMessage; ?></p>
-        <?php endif; ?>
+    <form action="" method="post">
+
+        <?php if (isset($_SESSION['registrationMessage'])) : 
+            foreach($_SESSION['registrationMessage'] as $error) : ?>
+                <p style="color: red;"><?php echo $error; ?></p>
+            <?php endforeach;
+            unset($_SESSION['registrationMessage']);
+            endif; 
+        ?>
 
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

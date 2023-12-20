@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$flag = (isset($_SESSION['loggedInAdmin'])) ? true : false;
+$flag = (isset($_SESSION['loggedInAdminId'])) ? true : false;
 
 session_unset();
 session_destroy();

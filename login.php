@@ -1,19 +1,37 @@
 <?php
+
+session_start();
+
+if( isset($_SESSION['loggedInUserId']) ){
+    header('location: ./user/');exit;
+}
+
+require_once './inc/connection.php';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $username = $dbc->real_escape_string( $_POST["username"] );
+    $password = $dbc->real_escape_string( $_POST["password"] );
 
     // TODO: Add authentication logic here
     // For simplicity, validation is not included in this basic example
     // You should check the entered credentials against a database, hash passwords, etc.
+    
+    $login_sql = "SELECT `id` FROM `users` WHERE `username`='$username' AND `password`='$password'";
+    $query = $dbc->query( $login_sql );
+    if( $dbc->affected_rows > 0 ){
+        $_SESSION['loggedInUserId'] = $query->fetch_assoc()['id'];
+        $_SESSION['loginMessage'] = "Login success!";
+        header('location: ./user/');exit;
+    }
+    else {
+        $loginMessage = "Incorrrect username or password!";
+    }
 
     // Example: Assume authentication is successful
-    $loginMessage = "Login successful!";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,14 +85,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <header>
-        <img src="image.png" alt="Image" style="display: block; margin: 0 auto;">
+        <img src="assets/img/image.png" alt="Image" style="display: block; margin: 0 auto;">
         <h1>Login to Car Rental System</h1>
     </header>
 
-    <form action="login_page.php" method="post">
+    <form action="" method="post">
         <?php if (isset($loginMessage)) : ?>
-            <p style="color: green;"><?php echo $loginMessage; ?></p>
+            <p style="color: red;"><?php echo $loginMessage; ?></p>
         <?php endif; ?>
+        <?php if (isset($_SESSION['registrationMessage'])) : ?>
+            <p style="color: green;"><?php echo $_SESSION['registrationMessage']; ?></p>
+            <?php unset($_SESSION['registrationMessage']);
+            endif; ?>
 
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

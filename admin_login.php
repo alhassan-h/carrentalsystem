@@ -1,19 +1,39 @@
 <?php
+
+session_start();
+
+if( isset($_SESSION['loggedInAdminId']) ){
+    header('location: ./admin/');exit;
+}
+
+require_once './inc/connection.php';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $adminUsername = $_POST["admin_username"];
-    $adminPassword = $_POST["admin_password"];
+    $username = $dbc->real_escape_string( $_POST["admin_username"] );
+    $password = $dbc->real_escape_string( $_POST["admin_password"] );
 
     // TODO: Add authentication logic here
     // For simplicity, validation is not included in this basic example
     // You should check the entered credentials against a database, hash passwords, etc.
+    
+    $login_sql = "SELECT `id` FROM `admin` WHERE `username`='$username' AND `password`='$password'";
+    $query = $dbc->query( $login_sql );
+    if( $dbc->affected_rows > 0 ){
+        $_SESSION['loggedInAdminId'] = $query->fetch_assoc()['id'];
+        $_SESSION['loginMessage'] = "Login success!";
+        header('location: ./admin/');exit;
+    }
+    else {
+        $_SESSION['loginMessage'] = "Incorrrect username or password!";
+        header('location: ./admin_login.php');exit;
+    }
 
     // Example: Assume authentication is successful
-    $loginMessage = "Admin login successful!";
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,15 +87,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <header>
-        <img src="image.png" alt="Image" style="display: block; margin: 0 auto;">
+        <img src="assets/img/image.png" alt="Image" style="display: block; margin: 0 auto;">
         <h1>Admin Login</h1>
 
     </header>
 
     <form action="admin_login.php" method="post">
-        <?php if (isset($loginMessage)) : ?>
-            <p style="color: green;"><?php echo $loginMessage; ?></p>
-        <?php endif; ?>
+        <?php if (isset($_SESSION['loginMessage'])) : ?>
+            <p style="color: red;"><?php echo $_SESSION['loginMessage']; ?></p>
+        <?php unset($_SESSION['loginMessage']); endif; ?>
 
         <label for="admin_username">Username:</label>
         <input type="text" id="admin_username" name="admin_username" required>
